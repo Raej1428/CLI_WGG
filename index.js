@@ -98,14 +98,14 @@ const guessDaLetta = () => {
 
 
             if (guesses === 0) {
-                console.log(`You lose! The word was ${selectedWord}: ${defsetUpion}`);
+                console.log(`You lose! The word was ${randomWord}: ${defineIt}`);
                 console.log(`\n*******************************************\n`)
                 setUp();
                 return;
             }
 
 
-            if (string === selectedWord) {
+            if (string === randomWord) {
                 figlet('You Won!!!', function (err, data) {
                     if (err) {
                         console.log('Something went wrong...');
@@ -114,7 +114,7 @@ const guessDaLetta = () => {
                     }
                     console.log(data)
                 });
-                console.log(`You win! The word was ${selectedWord}: ${defsetUpion}`);
+                console.log(`You win! The word was ${randomWord}: ${defineIt}`);
                 console.log(`\n*******************************************\n`)
                 setUp();
                 return;
