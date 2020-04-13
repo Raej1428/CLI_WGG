@@ -30,3 +30,7 @@ class Word {
 }
 
 module.exports = Word;
+
+// const newWord = new Word("phat");
+// newWord.guessWord("a");
+// newWord.showWord();

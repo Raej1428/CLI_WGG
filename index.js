@@ -1,5 +1,4 @@
 const Word = require("./word.js");
-const Letter = require("./letter.js")
 const inquirer = require("inquirer");
 const request = require('request');
 const cheerio = require('cheerio');
