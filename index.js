@@ -4,6 +4,9 @@ const request = require('request');
 const cheerio = require('cheerio');
 const figlet = require('figlet');
 
+let randomWord = "";
+let defineIt = "";
+
 class RandomWord {
     constructor() {
         this.word = "";
