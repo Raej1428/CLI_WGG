@@ -8,6 +8,7 @@
 <lead> Prerequisites:</lead>
 <li> Familiarity with Command Line Interface commands</li>
 <li> Understanding of NPM installs and required packages</li>
+  <li> Clone this repo and open in a command line application like terminal</li>  
 </ul>
 
 <ol>
@@ -21,4 +22,4 @@
 
 <p> After running "node index.js" from the command line, the user should be able to input a letter and the application will evaluate it against a randomnly generated word. See the video for a display of functionality.</p>
 
-<a href="https://github.com/raej1428/CLI_WGG" target="_blank" class="btn btn-dark">CLI WGG <img src="/githubgif.mov"> </a>
+
