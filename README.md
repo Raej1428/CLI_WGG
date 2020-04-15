@@ -21,4 +21,4 @@
 
 <p> After running "node index.js" from the command line, the user should be able to input a letter and the application will evaluate it against a randomnly generated word. See the video for a display of functionality.</p>
 
-<a href="https://github.com/raej1428/CLI_WGG" target="_blank" class="btn btn-dark">CLI WGG <iframe src="/githubgif.mov"> </iframe> </a>
+<a href="https://github.com/raej1428/CLI_WGG" target="_blank" class="btn btn-dark">CLI WGG <img src="/githubgif.mov"> </a>
