@@ -1,36 +1,28 @@
-const letter = require("./letter.js");
+var Letter = require("./letter.js");
 
-class Word {
-    constructor (word) {
-        this.wordArray = [];
-        this.createWord(word);
-    }
-
-    createWord(word) {
-        for (let i in word) {
-            const char = word.charAt(i);
-            const newLetter = new letter(char.toUpperCase());
-            this.wordArray.push(newLetter);
+function Word(wordArr) {
+    this.wordArr = wordArr;
+    this.testWord = [];
+    this.makeWord = function() {
+        for (var i=0; i<wordArr.length; i++) {
+            var let = new Letter(wordArr[i]);
+            this.testWord.push(let);
         }
     }
-
-    showWord() {
-        let wordShow = [];
-        for(let i in this.wordArray) {
-            wordShow.push(this.wordArray[i].showLetter());
+    this.showWord = function() {
+        var wordDisplay = [];
+        for (var i=0; i<this.testWord.length; i++) {
+            wordDisplay.push(this.testWord[i].displayLet());
         }
-        console.log(wordShow.join(" "));
+        return wordDisplay.join(" ");
     }
-
-    guessWord(playerGuess) {
-        for(let i in this.wordArray) {
-            this.wordArray[i].guessLetter(playerGuess);
+    this.checkGuess = function(myGuess) {
+        for (var i=0; i<this.testWord.length; i++) {
+            this.testWord[i].check(myGuess);
         }
     }
 }
 
+
 module.exports = Word;
 
-// const newWord = new Word("phat");
-// newWord.guessWord("a");
-// newWord.showWord();

@@ -1,28 +1,23 @@
-class Letter {
-    constructor(wordString) {
-        this.wordString = wordString;
-        this.equals = false;
-
-    }
-    showLetter() {
-        if (this.equals) {
-            return this.wordString;
-        } else {
+function Letter(alpha) {
+    this.alpha = alpha;
+    this.guessed = false;
+    this.displayLet = function() {
+        if (this.alpha === " ") {
+            return " ";
+        }
+        else if(!this.guessed) {
             return "_";
         }
-    }
-    guessLetter(playerGuess) {
-        if (playerGuess === this.wordString) {
-            return this.equals = true;
+        else {
+            return this.alpha;
         }
-
+    }
+    this.check = function(userGuess) {
+        if (userGuess === this.alpha) {
+            this.guessed = true;
+        }
     }
 }
 
-module.exports = Letter
+module.exports = Letter;
 
-
-// const a = new Letter("z");
-// console.log(z.wordString, z.equals);
-// z.guessLetter("b");
-// z.showLetter(); 

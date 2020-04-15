@@ -1,133 +1,95 @@
 const Word = require("./word.js");
-const inquirer = require("inquirer");
-const request = require('request');
-const cheerio = require('cheerio');
+const inquirer = require('inquirer');
+const colors = require('colors');
 const figlet = require('figlet');
+const randomWords = require('random-words');
 
-let randomWord = "";
-let defineIt = "";
+var wordList = randomWords.wordList;
+var select = 0;
+var chosenWord = "";
+var gameWord = "";
+var counter = 0;
 
-class RandomWord {
-    constructor() {
-        this.word = "";
-        this.getRandomWord();
+//Chooses a word from the word array, uses the word constructor to create the proper display and functionality;
+//'chosenWord' is used for comparison later to check if the word is solved
+function startGame() {
+    if (wordList.length < 2) {
+        wordList = randomWords.wordList;
     }
-
-    getRandomWord() {
-        const queryURL = "https://randomword.com/";
-        request(queryURL, function (error, response, body) {
-            if (error) {
-                console.log("Error: ${error}");
-            }
-
-            if (response.statusCode === 200) {
-                const $ = cheerio.load(body);
-                this, word = $("random_word").text();
-                word = new Word(this.word)
-                randomWord = $("#randWord").text();
-                defineIt = $("#randWordDef").text();
-            }
-
-        })
+    select = Math.floor(Math.random() * wordList.length);
+    chosenWord = wordList[select];
+    gameWord = new Word(chosenWord);
+    gameWord.makeWord();
+    if (select > -1) {
+        wordList.splice(select, 1);
     }
+    console.log("\nYou get 13 letter guesses to find the correct word.\n".rainbow)
+    promptUser();
 }
 
-let word = "";
-let string = "";
-let guesses = 0;
-
-function setUp() {
-
-    const randomWord = new RandomWord();
-
-    string = "";
-    guesses = 13;
-    correctLetters = 0;
-    lettersGuessed = [];
-
-    inquirer.prompt([
-        {
-            type: "confirm",
-            message: "I have a word in mind, can you guess the word one letter at a time?\n",
-            name: "letsPlay"
-        },
-    ]).then(resume => {
-        if (resume.letsPlay) {
-            word.showWord();
-            guessDaLetta();
-        } else {
-            console.log("Then this is... GOODBYE!");
-        }
-
-    });
-
-
-}
-
-const guessDaLetta = () => {
-    const [...w] = word.wordArray;
-    let letter = "";
-    if (guesses > 0) {
+//Allows the user to input a letter guess, restarts the game if player is out of wrong guesses.
+function promptUser() {
+    if (counter < 13) {
+        console.log(gameWord.showWord());
         inquirer.prompt([
             {
-                message: "What letter will you guess?\n",
-                name: "letterGuess"
+                type: "input",
+                name: "letter",
+                message: "\nPick a letter and press enter. ".cyan
             }
-        ]).then(resume => {
-            letter = resume.letterGuess.toUpperCase();
-
-            if (letter.length > 1 || letter.length < 1) {
-                console.log("Guess one letter, please.");
-
-            } else if (letter >= "a" && letter <= "z") {
-                lettersGuessed.push(letter);
-                word.guessWord(letter);
-                string = "";
-
-                for (i in w) {
-                    if (w[i].equals) {
-                        string += w[i].wordString;
-                    }
-                }
-                console.log("\nLetters used: ${lettersUsed.join(' ')}\n");
-                if (string.length === matchedLetters) {
-                    guesses--;
-                } else {
-                    matchedLetters = string.length;
-                }
-            } else {
-                console.log("Guess a letter, please!"); // error message if value other than a - z is selected
-            }
-
-
-            if (guesses === 0) {
-                console.log(`You lose! The word was ${randomWord}: ${defineIt}`);
-                console.log(`\n*******************************************\n`)
-                setUp();
-                return;
-            }
-
-
-            if (string === randomWord) {
-                figlet('You Won!!!', function (err, data) {
-                    if (err) {
-                        console.log('Something went wrong...');
-                        console.dir(err);
-                        return;
-                    }
-                    console.log(data)
-                });
-                console.log(`You win! The word was ${randomWord}: ${defineIt}`);
-                console.log(`\n*******************************************\n`)
-                setUp();
-                return;
-            } else {
-                word.showWord();
-                console.log(`\nYou have ${guesses} guess(es) left`);
-                guessALetter();
-            }
+        ]).then(function (data) {
+            checkAnswer(data);
         });
+    }
+    else {
+        console.log("\nSorry, you're out of guesses.\n".inverse);
+        console.log("The word was: " + chosenWord.rainbow);
+        chosenWord = "";
+        gameWord = "";
+        select = 0;
+        counter = 0;
+        startGame();
     }
 }
 
-setUp();
+//checks that the user's input is in correct format and compares the letter to gameWord to see if guess is correct
+function checkAnswer(data) {
+    if ((data.letter.length === 1) && /^[a-z, A-Z]+$/.test(data.letter)) {
+        var checkLetter = data.letter;
+        var temp = gameWord.showWord();
+        gameWord.checkGuess(checkLetter);
+        if (temp === gameWord.showWord()) {
+            console.log("\nSorry, wrong letter!\n".yellow);
+            counter++;
+            console.log(((13 - counter) + " guesses remaining").yellow);
+            promptUser();
+        }
+        else {
+            rightGuess();
+        }
+    }
+    else {
+        console.log("\nPlease enter a letter, one at a time.\n".yellow);
+        promptUser();
+    }
+}
+
+//If the user's guess is correct, the word array displays the word with the guessed letter(s), 
+//If the entire word is correct (filled in), the game restarts.
+function rightGuess() {
+    console.log("\nYou guessed correctly.\n".green);
+    if (chosenWord.replace(/ /g, "") == (gameWord.showWord()).replace(/ /g, "")) {
+        console.log(gameWord.showWord().america);
+        console.log('\nYou win!!\n'.america);
+        chosenWord = "";
+        gameWord = "";
+        select = 0;
+        counter = 0;
+        startGame();
+    }
+    else {
+        promptUser();
+    }
+}
+
+startGame();
