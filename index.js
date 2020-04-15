@@ -10,8 +10,6 @@ var chosenWord = "";
 var gameWord = "";
 var counter = 0;
 
-//Chooses a word from the word array, uses the word constructor to create the proper display and functionality;
-//'chosenWord' is used for comparison later to check if the word is solved
 function startGame() {
     if (wordList.length < 2) {
         wordList = randomWords.wordList;
@@ -27,7 +25,7 @@ function startGame() {
     promptUser();
 }
 
-//Allows the user to input a letter guess, restarts the game if player is out of wrong guesses.
+//Allows the user to input a letter guess, restarts the game if player is out of guesses.
 function promptUser() {
     if (counter < 13) {
         console.log(gameWord.showWord());
@@ -75,7 +73,7 @@ function checkAnswer(data) {
 }
 
 //If the user's guess is correct, the word array displays the word with the guessed letter(s), 
-//If the entire word is correct (filled in), the game restarts.
+//If its the entire word, the game restarts.
 function rightGuess() {
     console.log("\nYou guessed correctly.\n".green);
     if (chosenWord.replace(/ /g, "") == (gameWord.showWord()).replace(/ /g, "")) {
