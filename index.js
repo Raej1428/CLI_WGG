@@ -57,9 +57,9 @@ function checkAnswer(data) {
         var temp = gameWord.showWord();
         gameWord.checkGuess(checkLetter);
         if (temp === gameWord.showWord()) {
-            console.log("\nSorry, wrong letter!\n".yellow);
+            console.log("\nSorry, wrong letter!\n".magenta);
             counter++;
-            console.log(((13 - counter) + " guesses remaining").yellow);
+            console.log(((13 - counter) + " guesses remaining").magenta);
             promptUser();
         }
         else {
@@ -67,7 +67,7 @@ function checkAnswer(data) {
         }
     }
     else {
-        console.log("\nPlease enter a letter, one at a time.\n".yellow);
+        console.log("\nPlease enter a letter, one at a time.\n".magenta);
         promptUser();
     }
 }
@@ -75,7 +75,7 @@ function checkAnswer(data) {
 //If the user's guess is correct, the word array displays the word with the guessed letter(s), 
 //If its the entire word, the game restarts.
 function rightGuess() {
-    console.log("\nYou guessed correctly.\n".green);
+    console.log("\nYou guessed correctly.\n".magenta);
     if (chosenWord.replace(/ /g, "") == (gameWord.showWord()).replace(/ /g, "")) {
         console.log(gameWord.showWord().america);
         console.log('\nYou win!!\n'.america);
