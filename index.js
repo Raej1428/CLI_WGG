@@ -1,7 +1,7 @@
 const Word = require("./word.js");
 const inquirer = require('inquirer');
 const colors = require('colors');
-const figlet = require('figlet');
+// const figlet = require('figlet');
 const randomWords = require('random-words');
 
 var wordList = randomWords.wordList;
